@@ -1,14 +1,25 @@
-import './App.css'
-import { Button } from "@/components/ui/button"
+import { ThemeProvider } from './components/theme-provider'
+import Layout from './Layout'
+import MainPage from './MainPage'
+import SettingsPage from './components/pages/SettingsPage'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+
+import { LoaderCircle } from 'lucide-react'
+
+// <div className="flex flex-col items-center justify-center min-h-svh">
 
 function App() {
-
   return (
-    <>
-      <div className="flex flex-col items-center justify-center min-h-svh">
-        <Button>Click me</Button>
-      </div>
-    </>
+    <Router>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Layout>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Routes>
+        </Layout>
+      </ThemeProvider>
+    </Router>
   )
 }
 
