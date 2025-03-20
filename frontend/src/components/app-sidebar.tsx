@@ -1,5 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings, LibraryBig, FilePlus, EllipsisVertical } from "lucide-react"
-
+import { Home, Inbox, Search, Brain, Settings, LibraryBig, FilePlus, EllipsisVertical, Trash2, MapPlus, ListFilterPlus, Bot } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -15,25 +14,24 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 // Menu items.
 const items = [
+  /*
   {
     title: "Home",
     url: "/",
     icon: Home,
   },
+  */
   {
-    title: "Create Exam",
+    title: "Generate MVP",
     url: "/generate",
-    icon: FilePlus,
+    icon: MapPlus,
+    icon2: MapPlus,
+    icon3: ListFilterPlus
   },
   {
-    title: "My Exams",
+    title: "Generate Ideas",
     url: "/exams",
-    icon: LibraryBig,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
+    icon: Brain,
   },
   {
     title: "Account",
@@ -63,9 +61,13 @@ const userChats = [
 export function AppSidebar() {
   return (
     <Sidebar>
+      <div className="flex justify-center gap-2 text-xl pt-4">
+        <Bot />
+        <h1>PromptLabs</h1>
+      </div>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>PromptLabs</SidebarGroupLabel>
+          <SidebarGroupLabel>Platform</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -106,7 +108,8 @@ export function AppSidebar() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        <DropdownMenuItem onClick={() => console.log(`Deleting ${item.title}`)}>
+                        <DropdownMenuItem variant="destructive" onClick={() => console.log(`Deleting ${item.title}`)}>
+                          <Trash2 />
                           Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>

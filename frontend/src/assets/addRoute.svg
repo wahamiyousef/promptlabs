@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-route">
+  <circle cx="6" cy="19" r="3"/>
+  
+  <!-- Define a mask to cut out the plus sign -->
+  <mask id="cutout">
+    <rect width="24" height="24" fill="white" />
+    <circle cx="20" cy="18" r="4" fill="black"/>
+    <!--
+    <path d="M13 17h8" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M17 14v8" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    -->
+  </mask>
+  
+  <!-- Apply the mask to the route path -->
+  <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" mask="url(#cutout)"/>
+  
+  
+  <path d="M16 18h7"/>
+  <path d="M20 15v7"/>
+  <circle cx="18" cy="5" r="3"/>
+</svg>
