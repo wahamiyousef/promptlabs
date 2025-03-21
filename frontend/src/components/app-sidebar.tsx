@@ -61,7 +61,7 @@ const userChats = [
 export function AppSidebar() {
   return (
     <Sidebar>
-      <div className="flex justify-center gap-2 text-xl pt-4">
+      <div className="flex justify-center gap-2 text-xl pt-4 select-none">
         <Bot />
         <h1>PromptLabs</h1>
       </div>

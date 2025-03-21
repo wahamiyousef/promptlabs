@@ -7,9 +7,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <SidebarProvider>
       <AppSidebar />
       {/* <main className="min-h-full max-w-[1280px] m-0 p-[2rem]"> */}
-      <div className="w-full">
-        <main className="min-h-full p-4">
+      <div className="flex flex-col w-full min-h-screen">
+        {/* Sticky Navbar at the top */}
+        <div className="sticky top-0 z-50">
           <Navbar />
+        </div>
+        {/* Content below Navbar with padding to avoid overlap */}
+        <main className="flex-grow p-4 pt-18">
           {children}
         </main>
       </div>
