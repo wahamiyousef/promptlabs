@@ -1,0 +1,12 @@
+# create venv
+py -m venv .venv
+# activate venv
+.venv\Scripts\activate
+
+# install dependencies
+pip install -r requirements.txt
+
+# uvicron
+uvicorn main:app
+# uvicorn with reload
+uvicorn main:app --reload
