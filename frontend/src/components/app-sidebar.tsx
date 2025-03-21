@@ -23,14 +23,14 @@ const items = [
   */
   {
     title: "Generate MVP",
-    url: "/generate",
+    url: "/generate/mvps",
     icon: MapPlus,
     icon2: MapPlus,
     icon3: ListFilterPlus
   },
   {
     title: "Generate Ideas",
-    url: "/exams",
+    url: "/generate/ideas",
     icon: Brain,
   },
   {
@@ -49,12 +49,10 @@ const userChats = [
   {
     title: "SaaS idea 1",
     url: "/",
-    icon: Home,
   },
   {
     title: "SaaS App idea #2",
     url: "/",
-    icon: Home,
   },
 ]
 
@@ -87,7 +85,7 @@ export function AppSidebar() {
           <SidebarGroupLabel>MVPs</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-            {userChats.map((item) => (
+              {userChats.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <div className="flex items-center justify-between w-full hover:bg-accent rounded-md group">
                     {/* Link */}
@@ -118,7 +116,6 @@ export function AppSidebar() {
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
-
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

@@ -2,6 +2,7 @@ import { ThemeProvider } from './components/theme-provider'
 import Layout from './Layout'
 import MainPage from './MainPage'
 import SettingsPage from './components/pages/SettingsPage'
+import GenerateMVPs from './components/pages/GenerateMVPs'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 
 import { LoaderCircle } from 'lucide-react'
@@ -15,6 +16,8 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<MainPage />} />
+            <Route path="/generate/mvps" element={<GenerateMVPs />} />
+            <Route path="/generate/ideas" element={<GenerateMVPs />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </Layout>
