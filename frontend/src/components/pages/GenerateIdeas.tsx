@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card"; 
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowRight, LoaderCircle, LoaderIcon } from "lucide-react";
 
 interface ApiResponse {
   ideas: string[];
@@ -32,6 +33,7 @@ const GenerateIdeas: React.FC = () => {
 
       const data: ApiResponse = await res.json();
       console.log("Res: ",data);
+      console.log("Ideas: ", data.ideas);
       setResponses(data.ideas);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -53,7 +55,7 @@ const GenerateIdeas: React.FC = () => {
           className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-1 focus:ring-white"
         />
         <Button type="submit" disabled={loading}>
-          {loading ? "Generating..." : "Generate"}
+          {loading ? <> <LoaderCircle className="animate-spin"/> Generating...</> : "Generate"}
         </Button>
       </form>
 
@@ -62,9 +64,15 @@ const GenerateIdeas: React.FC = () => {
           <Card
             key={index}
             onClick={() => alert(`You selected: ${response}`)}
-            className="cursor-pointer hover:bg-gray-400 dark:hover:bg-gray-800 transition"
+            className="sm:flex-row items-center cursor-pointer p-3 hover:bg-gray-400 dark:hover:bg-gray-800 transition"
           >
-            <CardContent className="p-3">{response}</CardContent>
+            <CardContent>{response}</CardContent>
+            <Button className="h-16 relative group transition duration-300">
+              Generate MVP
+              <span className="absolute top-10 right-4 opacity-0 translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+                <ArrowRight />
+              </span>
+            </Button>
           </Card>
         ))}
       </div>

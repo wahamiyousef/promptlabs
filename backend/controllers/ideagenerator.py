@@ -1,4 +1,5 @@
 import os
+import re
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from openai import OpenAI
@@ -38,7 +39,12 @@ async def generate_ideas(request: IdeaRequest):
 
     response = json.loads(completion.to_json())
     ideas = response['choices'][0]['message']['content']
-    return {"ideas": ideas.split("\n")}
+    cleaned_ideas = [
+      re.sub(r"^\d+\.\s\*\*(.*?)\*\*", r"\1", idea).strip()
+      for idea in ideas.split("\n")[1:]
+      if idea.strip() != ""
+    ]
+    return {"ideas": cleaned_ideas}
 
   except Exception as e:
     print(f"Error generating ideas: {e}")
