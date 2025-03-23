@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { LoaderCircle } from "lucide-react";
 
 interface ApiResponse {
   mvp_plan: string[];
@@ -40,10 +41,21 @@ const GenerateMVPs: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const prompt = params.get("prompt");
+
+    if (prompt) {
+      setInput(prompt);
+      handleSubmit(); // Auto-submit the form when a prompt is passed
+    }
+  }, []);
+
+
   return (
     <div className="max-w-[700px] mx-auto">
       <h1 className="text-2xl font-bold mb-4">Generate MVPs</h1>
-      <form onSubmit={handleSubmit} className="flex gap-2">
+      <form onSubmit={handleSubmit} className="sm:flex w-full items-center space-x-2">
         <input
           type="text"
           value={input}
@@ -51,8 +63,8 @@ const GenerateMVPs: React.FC = () => {
           placeholder="Type your idea..."
           className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-1 focus:ring-white"
         />
-        <Button type="submit" disabled={loading}>
-          {loading ? "Generating..." : "Send"}
+        <Button className="mt-2 sm:mt-0 cursor-pointer" type="submit" disabled={loading}>
+          {loading ? <> <LoaderCircle className="animate-spin"/> Generating...</> : "Generate"}
         </Button>
       </form>
 

@@ -1,4 +1,5 @@
 import os
+import re
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from openai import OpenAI
@@ -48,8 +49,18 @@ async def generate_mvp(request: MVPRequest):
 
     response = json.loads(completion.to_json())
     mvp_plan = response['choices'][0]['message']['content']
+    print('mvp_plan: ', mvp_plan)
+    cleaned_mvps = re.sub(r'\*\*|[*]', '', mvp_plan)
+    '''
+    cleaned_mvps = [
+      re.sub(r"^\d+\.\s\*\*(.*?)\*\*", r"\1", mvp).strip()
+      for mvp in mvp_plan.split("\n")[1:]
+      if mvp.strip() != ""
+    ]
+    '''
+    print("cleaned_mvp: ", cleaned_mvps)
 
-    return {"mvp_plan": mvp_plan.split("\n")}
+    return {"mvp_plan": cleaned_mvps}
 
   except Exception as e:
     print(f"Error generating MVP plan: {e}")

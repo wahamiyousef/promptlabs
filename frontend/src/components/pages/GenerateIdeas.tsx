@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, LoaderCircle, LoaderIcon } from "lucide-react";
+import { ArrowRight, LoaderCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface ApiResponse {
   ideas: string[];
@@ -11,6 +12,12 @@ const GenerateIdeas: React.FC = () => {
   const [input, setInput] = useState<string>("");
   const [responses, setResponses] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const sendToGenerateMVP = (idea: string) => {
+    navigate(`/generate/mvps?prompt=${encodeURIComponent(idea)}`);
+  };
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,7 +53,8 @@ const GenerateIdeas: React.FC = () => {
   return (
     <div className="max-w-[700px] mx-auto">
       <h1 className="text-2xl font-bold mb-4">Generate Startup Ideas</h1>
-      <form onSubmit={handleSubmit} className="flex gap-2">
+      {/* <form onSubmit={handleSubmit} className="flex gap-2"> */}
+      <form onSubmit={handleSubmit} className="sm:flex w-full items-center space-x-2">
         <input
           type="text"
           value={input}
@@ -54,7 +62,7 @@ const GenerateIdeas: React.FC = () => {
           placeholder="Enter a theme or problem..."
           className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-1 focus:ring-white"
         />
-        <Button type="submit" disabled={loading}>
+        <Button className="mt-2 sm:mt-0" type="submit" disabled={loading}>
           {loading ? <> <LoaderCircle className="animate-spin"/> Generating...</> : "Generate"}
         </Button>
       </form>
@@ -63,11 +71,14 @@ const GenerateIdeas: React.FC = () => {
         {responses.map((response, index) => (
           <Card
             key={index}
-            onClick={() => alert(`You selected: ${response}`)}
-            className="sm:flex-row items-center cursor-pointer p-3 hover:bg-gray-400 dark:hover:bg-gray-800 transition"
+            // onClick={() => alert(`You selected: ${response}`)}
+            className="sm:flex-row items-center p-3 hover:bg-gray-200 dark:hover:bg-gray-800 transition"
           >
             <CardContent>{response}</CardContent>
-            <Button className="h-16 relative group transition duration-300">
+            <Button
+              className="h-16 cursor-pointer relative group transition duration-300"
+              onClick={() => sendToGenerateMVP(response)}
+              >
               Generate MVP
               <span className="absolute top-10 right-4 opacity-0 translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
                 <ArrowRight />
