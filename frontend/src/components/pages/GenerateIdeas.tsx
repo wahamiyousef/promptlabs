@@ -62,7 +62,7 @@ const GenerateIdeas: React.FC = () => {
           placeholder="Enter a theme or problem..."
           className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-1 focus:ring-white"
         />
-        <Button className="mt-2 sm:mt-0" type="submit" disabled={loading}>
+        <Button className="mt-2 sm:mt-0 cursor-pointer" type="submit" disabled={loading}>
           {loading ? <> <LoaderCircle className="animate-spin"/> Generating...</> : "Generate"}
         </Button>
       </form>
