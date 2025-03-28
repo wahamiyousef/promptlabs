@@ -2,11 +2,11 @@
 
 # About
 <h2> Spend less time planning and spend more time hacking! </h2>
-![generate idea page](sc1.png)
+<img src="sc1.png" />
 
 # Install
 ## Frontend
-Install dependencies: `npm i`
+Install dependencies: `npm i` <br />
 Start frontend: `npm run dev`
 
 ## Backend
