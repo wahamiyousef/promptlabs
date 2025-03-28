@@ -1,7 +1,7 @@
 # promptlabs
 
 # About
-## Spend less time planning and spend more time hacking!
+<h2> Spend less time planning and spend more time hacking! </h2>
 ![generate idea page](sc1.png)
 
 # Install
