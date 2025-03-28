@@ -52,7 +52,7 @@ const GenerateIdeas: React.FC = () => {
 
   return (
     <div className="max-w-[700px] mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Generate Startup Ideas</h1>
+      <h1 className="text-2xl font-bold mb-4">Generate Hackathon Ideas</h1>
       {/* <form onSubmit={handleSubmit} className="flex gap-2"> */}
       <form onSubmit={handleSubmit} className="sm:flex w-full items-center space-x-2">
         <input
