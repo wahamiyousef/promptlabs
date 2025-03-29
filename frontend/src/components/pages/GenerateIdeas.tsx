@@ -16,19 +16,15 @@ const GenerateIdeas: React.FC = () => {
   const navigate = useNavigate();
 
   const models = [
-    "Llama 3.3",
-    "DeepSeek V3",
-    "DeepSeek R1",
-    "GPT-4",
-    "Claude 3",
-    "Mistral 7B"
-  ]
-  const models_dict = {
-    "Llama 3.3":['meta-llama/Llama-3.3-70B-Instruct'],
-    "DeepSeek V3":['deepseek-ai/DeepSeek-V3'],
-    "DeepSeek R1":['deepseek-ai/DeepSeek-R1'],
-  } as const;
-  type ModelKey = keyof typeof models_dict;
+    { name: "Llama 3.3", value: "meta-llama/Llama-3.3-70B-Instruct", disabled: false },
+    { name: "DeepSeek V3", value: "deepseek-ai/DeepSeek-V3", disabled: false },
+    { name: "DeepSeek R1", value: "deepseek-ai/DeepSeek-R1", disabled: false },
+    { name: "GPT-4", value: "openai/GPT-4", disabled: true }, // Locked for VIP only
+    { name: "Claude 3", value: "anthropic/Claude-3", disabled: true }, // Locked for VIP only
+    { name: "Mistral 7B", value: "mistral/Mistral-7B", disabled: false }
+  ] as const;
+  
+  type ModelKey = (typeof models)[number]["name"];
   const [selectedModel, setSelectedModel] = useState<ModelKey>("Llama 3.3");
 
   const sendToGenerateMVP = (idea: string) => {
@@ -43,12 +39,14 @@ const GenerateIdeas: React.FC = () => {
     setLoading(true);
 
     try {
+      const model = models.find((m) => m.name === selectedModel)?.value;
+
       const res = await fetch("http://localhost:8000/api/generate_ideas", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ idea: input, model: models_dict[selectedModel][0] }),
+        body: JSON.stringify({ idea: input, model }),
       });
 
       if (!res.ok) {
@@ -81,12 +79,20 @@ const GenerateIdeas: React.FC = () => {
               <DropdownMenuLabel>Select AI Model</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {models.map((model) => (
-                <DropdownMenuItem 
-                  key={model} 
-                  onClick={() => setSelectedModel(model)}
-                  className={selectedModel === model ? "bg-gray-100 dark:bg-gray-600 font-semibold" : ""}
+                <DropdownMenuItem
+                  key={model.name}
+                  onClick={() => !model.disabled && setSelectedModel(model.name)}
+                  disabled={model.disabled}
+                  className={`${
+                    model.disabled
+                      ? "text-gray-400 cursor-not-allowed"
+                      : "hover:bg-gray-100 dark:hover:bg-gray-600"
+                  } ${selectedModel === model.name ? "bg-gray-100 dark:bg-gray-600 font-semibold" : ""}`}
                 >
-                  {model}
+                  {model.name}
+                  {model.disabled && (
+                    <span className="ml-2 text-sm text-gray-500">(VIP only)</span>
+                  )}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
