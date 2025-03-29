@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, LoaderCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 interface ApiResponse {
   ideas: string[];
@@ -13,6 +14,22 @@ const GenerateIdeas: React.FC = () => {
   const [responses, setResponses] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const models = [
+    "Llama 3.3",
+    "DeepSeek V3",
+    "DeepSeek R1",
+    "GPT-4",
+    "Claude 3",
+    "Mistral 7B"
+  ]
+  const models_dict = {
+    "Llama 3.3":['meta-llama/Llama-3.3-70B-Instruct'],
+    "DeepSeek V3":['deepseek-ai/DeepSeek-V3'],
+    "DeepSeek R1":['deepseek-ai/DeepSeek-R1'],
+  } as const;
+  type ModelKey = keyof typeof models_dict;
+  const [selectedModel, setSelectedModel] = useState<ModelKey>("Llama 3.3");
 
   const sendToGenerateMVP = (idea: string) => {
     navigate(`/generate/mvps?prompt=${encodeURIComponent(idea)}`);
@@ -31,7 +48,7 @@ const GenerateIdeas: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ idea: input }),
+        body: JSON.stringify({ idea: input, model: models_dict[selectedModel][0] }),
       });
 
       if (!res.ok) {
@@ -51,10 +68,30 @@ const GenerateIdeas: React.FC = () => {
   };
 
   return (
-    <div className="max-w-[700px] mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Generate Hackathon Ideas</h1>
+    <div className="max-w-[750px] mx-auto">
+      <h1 className="text-2xl font-bold mb-4 ml-7">Generate Hackathon Ideas</h1>
       {/* <form onSubmit={handleSubmit} className="flex gap-2"> */}
       <form onSubmit={handleSubmit} className="sm:flex w-full items-center space-x-2">
+        <div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">{selectedModel}</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Select AI Model</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {models.map((model) => (
+                <DropdownMenuItem 
+                  key={model} 
+                  onClick={() => setSelectedModel(model)}
+                  className={selectedModel === model ? "bg-gray-100 dark:bg-gray-600 font-semibold" : ""}
+                >
+                  {model}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
         <input
           type="text"
           value={input}
