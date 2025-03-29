@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, LoaderCircle } from "lucide-react";
+import { ArrowRight, Gem, LoaderCircle, Lock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
@@ -30,7 +30,6 @@ const GenerateIdeas: React.FC = () => {
   const sendToGenerateMVP = (idea: string) => {
     navigate(`/generate/mvps?prompt=${encodeURIComponent(idea)}`);
   };
-
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -85,13 +84,13 @@ const GenerateIdeas: React.FC = () => {
                   disabled={model.disabled}
                   className={`${
                     model.disabled
-                      ? "text-gray-400 cursor-not-allowed"
+                      ? "text-gray-400 cursor-not-allowed flex justify-between"
                       : "hover:bg-gray-100 dark:hover:bg-gray-600"
                   } ${selectedModel === model.name ? "bg-gray-100 dark:bg-gray-600 font-semibold" : ""}`}
                 >
                   {model.name}
                   {model.disabled && (
-                    <span className="ml-2 text-sm text-gray-500">(VIP only)</span>
+                    <span className="ml-2 text-sm text-gray-500 flex"><Lock /></span>
                   )}
                 </DropdownMenuItem>
               ))}
